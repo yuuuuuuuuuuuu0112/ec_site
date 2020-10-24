@@ -1,0 +1,59 @@
+
+<% if @post.errors.any? %>
+  <div class="notification is-danger">
+    <h2><%= @post.errors.count %>件のエラーがあります。</h2>
+    <ul>
+      <% @post.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %> 
+<%= form_for @post do |f|%>
+<div class ="container">
+ <div class ="column mb-6">
+ </div>
+</div>
+<div class ="container">
+<div class="columns is-mobile is-centered">
+<div class ="column is-half">
+<div class ="box">
+<div class="field">
+  <label class="label">タイトル</label>
+  <div class="control">
+    <%= f.text_field :title, class: "input", placeholder: "Title" %>
+
+  </div>
+</div>
+<div class="field">
+    <label class="label">アップロード画像</label>
+    <div class="control">
+      <span class="file-cta">
+        <%= f.attachment_field :image, class: "file-input" %>
+        <span class="file-icon">
+          <i class="fas fa-upload"></i>
+        </span>
+          <span class="file-label">
+          <%=f.label :image, "ファイルをアップロード"%>
+          </span>
+      </span>
+    </div>  
+  </div>
+
+<div class="field">
+  <label class="label">投稿内容</label>
+  <div class="control">
+    <%= f.text_area :body, class: "textarea", placeholder: "Textarea" %>
+  </div>
+</div>
+<div class="field is-grouped">
+  <div class="control">
+  <%= f.submit "投稿", class: "button is-success" %>
+  </div>
+  <div class="control">
+    <%= link_to posts_path do %>
+    <div class="button is-link is-light">戻る</div>
+    <% end %>
+  </div>
+</div>
+<% end %>

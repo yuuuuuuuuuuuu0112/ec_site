@@ -1,0 +1,66 @@
+
+<%=form_for @post do |f|%>
+
+  <%=f.label :body %>
+  <%= f.text_area :body %>
+
+  <%=f.label :image %>
+  <%= f.attachment_field :image %>
+  
+  <%=f.submit "更新"%>
+
+
+<div class="container">
+  <div class="columns is-centered">
+    <div class="column is-6">
+
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="columns is-centered mt-6">
+    <div class="column is-6">
+      <div class="field">
+        <label class="label">タイトル</label>
+        <%= f.text_field :title, class: "input", placeholder: "Title" %>
+      </div>
+
+
+<div class="field">
+    <label class="label">アップロード画像</label>
+    <div class="control">
+      <span class="file-cta">
+        <%= f.attachment_field :image, class: "file-input" %>
+        <span class="file-icon">
+          <i class="fas fa-upload"></i>
+        </span>
+          <span class="file-label">
+          <%=f.label :image, "ファイルをアップロード"%>
+          </span>
+      </span>
+    </div>  
+  </div>
+      <div class="field">
+  <label class="label">投稿内容</label>
+  <div class="control">
+    <%= f.text_area :body, class: "textarea", placeholder: "Textarea" %>
+  </div>
+</div>
+<div class="field is-grouped">
+  <div class="control">
+  <%= f.submit "更新", class: "button is-success" %>
+  </div>
+  <div class="control">
+    <%= link_to posts_path do %>
+    <div class="button is-link is-light">戻る</div>
+    <% end %>
+  </div>
+</div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<% end %>

@@ -1,0 +1,85 @@
+<div class ="column mt-6">
+</div>
+<% @posts.each do |post|%>
+  <div class ="container">
+    <div class="columns is-mobile is-centered">
+      <div class="column mb-2">
+      <div class ="box">
+        <div class ="title has-text-centered">
+        <%= link_to post_path(post) do %>
+          <%= post.title %>
+         <% end %>
+        </div>
+        <article class="box media">
+          <figure class="media-left">
+            <p class="image is-64x64">
+               <%= link_to user_path(post.user_id) do %>
+               <%= attachment_image_tag post.user, :profile_image, fallback: "no-image.png" %>
+               <% end %>
+               </p>
+          </figure>
+            <div class="media-content">
+              <div class="content">
+                  <%= link_to user_path(post.user_id) do %>
+                    <p><strong><%= post.user.username %></strong>
+                  <% end %>
+                  <br>
+                  <%= post.body%>
+                     <% if post.image_id == nil %>
+                     <% else %>
+                        <%= link_to post_path(post) do %>
+                        画像あり
+                        <% end %>
+                     <% end %>
+                  <br>
+                  <nav class="level is-mobile mb-2">
+                  <div class="level-left">
+                     <a class="level-item">
+                     <%= link_to post_path(post) do %>
+                        <span class="icon is-small"><i class="fas fa-reply"></i></span>
+                        <%= post.comments.count %>
+                        <% end %>
+                     </a>
+                     <a class="level-item">
+                        <% if user_signed_in? %> 
+                        <% if current_user.already_favorited?(post)%>
+                           <%= link_to post_favorites_path(post), method: :delete do %>
+                           <span style="color: #ff5252"><span style="font-size: 100%"><i class="fa fa-heart faa-wrench animated-hover"></i></span></span>
+                           <% end %>
+                        <% else %>
+                           <%= link_to post_favorites_path(post), method: :post do %>
+                              <i class ="far fa-heart faa-wrench animated-hover"></i>
+                           <% end %>
+                        <% end %>
+                        <%= post.favorites.count %>
+                        <% else %>
+                        <%= link_to post_favorites_path(post), method: :delete do %>
+                        <i class ="far fa-heart faa-wrench animated-hover"></i>
+                        <%= post.favorites.count %>
+                        <% end %>
+                        <% end %>
+                        <div class ="is-right">
+                     </a>
+                  </div>
+                  </nav>
+                     <div class ="has-text-right">
+                        <%= link_to post_path(post) do %>
+                        詳細
+                        <% end %>
+                     <% if current_user == post.user %>
+                        <%= link_to post_path(post), method: :delete, data:{confirm: "削除しますか？"} do %>
+                        削除
+                        <% end %>
+                     <% end %>
+                     <%= post.updated_at.strftime("%Y-%m-%d %H:%M") %>投稿
+                     </div>
+                  </p>
+               </div>
+            </div>
+          </div>
+         </article>
+         </div>
+         </main>
+      </div>
+   </div>
+<% end %>

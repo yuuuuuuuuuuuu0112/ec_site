@@ -1,0 +1,110 @@
+<div class ="column mb-6">
+</div>
+<div class ="container">
+  <div class="columns is-centered">
+    <div class="column is-10">
+    <div class ="box">
+      <div class="title has-text-centered">
+        <%= @post.title %>
+      </div>
+      <article class="media mt-6">
+        <figure class="media-left">
+          <p class="image is-64x64">
+            <%=link_to user_path(@post.user) do %>
+            <%= attachment_image_tag @post.user,:profile_image, fallback: "no-image.png" %>
+            <% end %>
+          </p>
+        </figure>
+        <div class="media-content">
+          <div class="content">
+            <p>
+              <strong>
+                <%=link_to user_path(@post.user) do %>
+                <%= @post.user.username %>
+                <% end %>
+              </strong>
+              <br>
+							<%= simple_format @post.body %>
+              <p class="image is-128x128">
+							<%= attachment_image_tag @post, :image %>
+              </p>
+                <div class ="has-text-right">
+                  <% if current_user.already_favorited?(@post)%>
+                    <%= link_to post_favorites_path(@post), method: :delete do %>
+                      <span style="color: #ff5252"><span style="font-size: 100%"><i class="fa fa-heart faa-wrench animated-hover"></i></span></span>
+                    <% end %>
+                    <% else %>
+                    <%= link_to post_favorites_path(@post), method: :post do %>
+                      <i class ="far fa-heart  faa-wrench animated-hover"></i>
+                    <% end %>
+                  <% end %>
+                  <%= @post.favorites.count %>
+                  <% if @post.user.id == current_user.id%>
+                    <%= link_to "編集", edit_post_path(@post), class: "buttom"%>
+                </div>
+								<% end %>
+            </p>
+          </div>
+				<% @comments.each do |comment| %>
+          <article class="media">
+            <figure class="media-left">
+              <p class="image is-48x48">
+                <%=link_to user_path(comment.user) do %>
+                <%= attachment_image_tag comment.user,:profile_image, fallback: "no-image.png" %>
+            <% end %>
+              </p>
+            </figure>
+            <div class="media-content">
+              <div class="content">
+                <p>
+                  <strong>
+										<%=link_to user_path(comment.user) do %>
+										<%= comment.user.username %>
+										<% end %>
+									</strong>
+                  <br>
+										<%= comment.comment %>
+                  <br>
+									<% if comment.user.id == current_user.id%>
+                    <%= link_to post_comment_path(@post, comment), method: :delete, data:{confirm: "削除しますか？"} do %>
+                    <div class ="has-text-right">
+                    削除
+                    </div>
+                    <% end %>
+									<% end %>
+                </p>
+              </div>
+            </div>
+          </article>
+				<% end %>
+      <%= form_for [@post, @comment] do |f| %>
+      <article class="media">
+        <figure class="media-left">
+          <p class="image is-64x64">
+            <%= attachment_image_tag current_user,:profile_image, fallback: "no-image.png" %>
+          </p>
+        </figure>
+        <div class="media-content">
+          <div class="field">
+            <p class="control">
+              <div class="field">
+                <p class="control">
+                  <%= f.text_area :comment, class: "textarea", placeholder: "コメントを入力する"%>
+                </p>
+              </div>
+            </p>
+          </div>
+          <div class="field">
+            <p class="control">
+                <%= f.submit '送信', class: "btn-sm btn-primary" %>
+            </p>
+          </div>
+        </div>
+      </article>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+
+

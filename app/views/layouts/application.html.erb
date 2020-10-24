@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Maker</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <script src="https://kit.fontawesome.com/9a773ab785.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome-animation/0.0.10/font-awesome-animation.css" type="text/css" media="all" />
+  </head>
+
+  <body>
+  
+    <% if flash[:notice] %>
+      <div class="notification is-info">
+        <p class="notice"><%= notice %></p>
+      </div>
+    <% end %>
+    <% if flash[:alert] %>
+      <div class="notification is-danger">
+        <p class="alert"><%= alert %></p>
+      </div>
+    <% end %>
+    <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand ">
+        <p class="navbar-item">
+          <%= link_to root_path do %>
+            <strong class="is-size-3" style="font-family: cursive; color: black;">Review House</strong>
+          <% end %>
+        </p>
+        <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+      <div id="navbarBasicExample" class="navbar-menu is-active">
+        <div class="navbar-start">
+          <%= link_to house_makers_path, class: "navbar-item" do %>
+            ハウスメーカー一覧
+          <% end %>
+          <%= link_to users_path, class: "navbar-item" do %>
+            ユーザー一覧
+          <% end %>
+          <%= link_to posts_path, class: "navbar-item" do %>
+            投稿一覧
+          <% end %>
+          <%= link_to new_post_path, class: "navbar-item" do %>
+            新規投稿
+          <% end %>
+        </div>
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <% if user_signed_in? %>
+              <p class="navbar-item">ようこそ
+              <%= link_to user_path(current_user) do %>
+              <%= current_user.username %> 
+              <% end %>
+
+              さん
+              </p>
+            <% end %>
+            <div class="buttons">
+              <% if user_signed_in? %>
+                <%= link_to user_path(current_user) ,class: "button" do  %>
+                マイページ
+                <% end %>
+                <%= link_to destroy_user_session_path, method: :delete, class: "button" do %>
+                  ログアウト
+                <% end %>
+              <% else %>
+                <%= link_to new_user_session_path, class: "button" do %>
+                  ログイン
+                <% end %>
+                <%= link_to new_user_registration_path, class: "button" do %>
+                  新規登録
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <%= yield %>
+  </body>
+</html>
+

@@ -1,0 +1,119 @@
+
+<% if @user.errors.any? %>
+  <div class="notification is-danger">
+    <h2><%= @user.errors.count %>件のエラーがあります。</h2>
+    <ul>
+      <% @user.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %> 
+<%=form_for @user do |f|%>
+
+<div class="container">
+  <div class="columns is-centered">
+    <div class="column is-6">
+
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="columns is-centered mt-6">
+    <div class="column is-6">
+      <div class="field">
+        <label class="label">ユーザーネーム</label>
+        <div class="control has-icons-left has-icons-right">
+          <%= f.text_field :username,class: "input" %>
+          <span class="icon is-small is-left">
+            <i class="fas fa-user"></i>
+          </span>
+          <span class="icon is-small is-right">
+            <i class="fas fa-check"></i>
+          </span>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="label">Email</label>
+        <div class="control has-icons-left has-icons-right">
+          <%= f.text_field :email, class: "input" %>
+          <span class="icon is-small is-left">
+            <i class="fas fa-envelope"></i>
+          </span>
+          <span class="icon is-small is-right">
+            <i class="fas fa-exclamation-triangle"></i>
+          </span>
+        </div>
+      </div>
+      <div class="field">
+        <label class="label">プロフィール画像</label>
+        <div class="control">
+          <span class="file-cta">
+            <%= f.attachment_field :profile_image, class: "file-input" %>
+            <span class="file-icon">
+              <i class="fas fa-upload"></i>
+            </span>
+            <span class="file-label">
+            <%=f.label :profile_image, "ファイルをアップロード"%>
+            </span>
+          </span>
+        </div>  
+      </div>
+      <div class="field">
+        <label class="label">現在の状況</label>
+        <div class="control">
+          <div class="select">
+              <%= f.select :have_house, {"これから建築": 1, "建築済み": 2}, { class: 'form-control' , required: true } %>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="label">
+          <% if @user.have_house == "1" %>
+            <%=f.label :maker_name, "気になるメーカー"%>
+          <% else %>
+            <%=f.label :maker_name, "建築メーカー" %>
+          <% end %>
+        </label>
+        <div class="control has-icons-left has-icons-right">
+          <%= f.text_field :maker_name, class: "input" %>
+          <span class="icon is-small is-left">
+            <i class="fa fa-home"></i>
+          </span>
+          <span class="icon is-small is-right">
+            <i class="fas fa-exclamation-triangle"></i>
+          </span>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="label">プロフィール</label>
+        <div class="control has-icons-left has-icons-right">
+          <%= f.text_field :profile, class: "input textarea" %>
+          <span class="icon is-small is-left">
+            <i class="fa fa-user-circle"></i>
+          </span>
+          <span class="icon is-small is-right">
+            <i class="fas fa-exclamation-triangle"></i>
+          </span>
+        </div>
+      </div>
+      <div class="field is-grouped">
+        <div class="control">
+          <%=f.submit "更新", class: "button"%>
+        </div>
+        <div class="control">
+          <%= link_to user_path(current_user) ,class: "button" do  %>
+          戻る
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<% end %>
+

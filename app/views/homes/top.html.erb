@@ -1,0 +1,36 @@
+<section class="section mt-6">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-10">
+          <p class="is-size-1 has-text-weight-bold has-text-centered mt-6">あ</p>
+          <br>
+          <div class="columns is-centered">
+            <div class="column is-3">
+            <% if user_signed_in? %>
+              <%= link_to "ハウスメーカー一覧", house_makers_path, class: "button is-fullwidth" %>
+              <br>    
+              <%= link_to destroy_user_session_path, method: :delete, class: "button is-fullwidth" do %>
+                  ログアウト
+                <% end %>
+            <% else %>
+              <%= link_to "ログイン", new_user_session_path, class: "button is-fullwidth" %>
+              <br>
+              <%= link_to "新規登録", new_user_registration_path, class: "button is-fullwidth" %>
+            <% end %>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
