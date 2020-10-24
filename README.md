@@ -22,10 +22,5 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
-# maker
+
 # house-maker
-# house-maker
-# house-maker
-# house-maker
-＃yudaikosugi
-# yudaikosugi
