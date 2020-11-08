@@ -1,50 +1,73 @@
 <div class ="column mt-6">
 </div>
-<% @posts.each do |post|%>
-  <div class ="container">
-    <div class="columns is-mobile is-centered">
-      <div class="column mb-2">
-      <div class ="box">
-        <div class ="title has-text-centered">
-        <%= link_to post_path(post) do %>
-          <%= post.title %>
-         <% end %>
-        </div>
-        <article class="box media">
-          <figure class="media-left">
-            <p class="image is-64x64">
-               <%= link_to user_path(post.user_id) do %>
-               <%= attachment_image_tag post.user, :profile_image, fallback: "no-image.png" %>
-               <% end %>
-               </p>
-          </figure>
-            <div class="media-content">
-              <div class="content">
-                  <%= link_to user_path(post.user_id) do %>
-                    <p><strong><%= post.user.username %></strong>
-                  <% end %>
-                  <br>
-                  <%= post.body%>
-                     <% if post.image_id == nil %>
-                     <% else %>
-                        <%= link_to post_path(post) do %>
-                        画像あり
-                        <% end %>
+<div class ="container">
+   <div class="columns is-mobile is-centered">
+      <div class="column is-four-fifths">
+         <section class="box">
+            <div class="container">
+               <h1 class="title has-text-centered mb-4">
+               投稿一覧
+               </h1>
+            </div>
+            <section class="box">
+               <div class="has-text-centered">
+                  <nav class="level">
+                     <div class="level-left">
+                        <div class="level-item">
+                           <p class="subtitle is-5">
+                           <strong>検索ワード</strong>
+                           </p>
+                        </div>
+                        <div class="level-item">
+                           <%= search_form_for @q do |f| %>
+                           <div class="field has-addons">
+                              <p class="control">
+                                 <%= f.search_field :title_cont,class:"input", type:"text", placeholder:"検索ワード"%>
+                              </p>
+                              <p class="control">
+                                 <%= f.submit "検索",class: "button" %>
+                              </p>
+                           </div>
+                           <% end %>
+                        </div>
+                     </div>
+                     <%= link_to "全て表示" ,posts_path ,class:"button" %>
+                  </nav>
+               </div>
+            </section>
+            <% @posts.each do |post|%> 
+            <div class="box media mb-0 mt-0 pb-2 pt-2">
+               <figure class="media-left">
+                  <p class="image is-32x32">
+                     <%= link_to user_path(post.user_id) do %>
+                        <%= attachment_image_tag post.user, :profile_image, fallback: "no-image.png" %>
                      <% end %>
-                  <br>
-                  <nav class="level is-mobile mb-2">
-                  <div class="level-left">
-                     <a class="level-item">
+                  </p>
+               </figure>
+               <div class="media-content">
+                  <%= link_to user_path(post.user_id) do %>
+                     <%= post.user.username %>さん：
+                  <% end %>
+                  <strong>
+                     <%= link_to post_path(post) do %>
+                        <%= post.title %>
+                     <% end %>
+                  </strong>
+                  <% if post.image_id == nil %>
+                  <% else %>
+                     <%= link_to post_path(post) do %>
+                        画像あり
+                     <% end %>
+                  <% end %>
+                  <div class ="has-text-right is-size-7">
                      <%= link_to post_path(post) do %>
                         <span class="icon is-small"><i class="fas fa-reply"></i></span>
                         <%= post.comments.count %>
-                        <% end %>
-                     </a>
-                     <a class="level-item">
-                        <% if user_signed_in? %> 
+                     <% end %>
+                     <% if user_signed_in? %> 
                         <% if current_user.already_favorited?(post)%>
                            <%= link_to post_favorites_path(post), method: :delete do %>
-                           <span style="color: #ff5252"><span style="font-size: 100%"><i class="fa fa-heart faa-wrench animated-hover"></i></span></span>
+                              <span style="color: #ff5252"><span style="font-size: 100%"><i class="fa fa-heart faa-wrench animated-hover"></i></span></span>
                            <% end %>
                         <% else %>
                            <%= link_to post_favorites_path(post), method: :post do %>
@@ -52,34 +75,29 @@
                            <% end %>
                         <% end %>
                         <%= post.favorites.count %>
-                        <% else %>
+                     <% else %>
                         <%= link_to post_favorites_path(post), method: :delete do %>
-                        <i class ="far fa-heart faa-wrench animated-hover"></i>
-                        <%= post.favorites.count %>
+                           <i class ="far fa-heart faa-wrench animated-hover"></i>
+                           <%= post.favorites.count %>
                         <% end %>
-                        <% end %>
-                        <div class ="is-right">
-                     </a>
-                  </div>
-                  </nav>
-                     <div class ="has-text-right">
-                        <%= link_to post_path(post) do %>
+                     <% end %>
+                     <%= link_to post_path(post) do %>
                         詳細
-                        <% end %>
+                     <% end %>
                      <% if current_user == post.user %>
                         <%= link_to post_path(post), method: :delete, data:{confirm: "削除しますか？"} do %>
-                        削除
+                           削除
                         <% end %>
                      <% end %>
                      <%= post.updated_at.strftime("%Y-%m-%d %H:%M") %>投稿
-                     </div>
-                  </p>
+                  </div>
                </div>
             </div>
-          </div>
-         </article>
-         </div>
-         </main>
+            <% end %>
+            <div class="card mt-3 mb-0">
+               <%= paginate @posts,class: "pagination is-centered" %>
+            </div>
+         </section>
       </div>
    </div>
-<% end %>
+</div>

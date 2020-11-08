@@ -25,43 +25,54 @@
     </div>
   </div>
 <section class="section">
-  <div class="container">
-    <div class="columns is-multiline is-mobile is-centered ">
-      <% @reviews.each do |review| %>
+  <div class ="container">
+    <div class="columns is-mobile is-centered">
         <div class="column is-four-fifths">
-          <p class="card-header-title">
-            <div class="card mb-6">
-              <header class="card-header">
-                <p class="card-header-title is-centered">
-                <%= link_to user_path(review.user_id) do %>
-                  <%= review.user.username %>さん
-                <% end %>
-                </p>
-                <div class ="has-text-right">
-                  <p class="card-header-title ">
-                  評価：<%= review.score %>点
-                  </p>
-                </div>
-                <div class="star-rating mt-1 ">
-                  <div class="star-rating-front" style="width: <%= review.score * 20 %>%">★★★★★</div>
-                  <div class="star-rating-back">★★★★★</div>
-                </div>
-                <p class="card-header-title is-centered">
-                </p>
-              </header>
-              <div class="card-content">
-                <div class="content">
-                  <div class="content average-score">
-                    <div class="card-header-title is-centered">
-                     <%= review.content %>
-                    </div>
-                  </div>
-                </div>
+          <div class="box">
+              <div class="container">
+                <h1 class="title has-text-centered mb-4">
+                <%= @house_maker.name %>の評価
+                </h1>
               </div>
-            </div>
-          </p>
-        </div>
-      <% end %>
+              <% @reviews.each do |review| %>
+                <div class="box media mb-0 mt-0">
+                    <figure class="media-left">
+                      <p class="image is-32x32">
+                          <%= link_to user_path(review.user_id) do %>
+                            <%= attachment_image_tag review.user, :profile_image, fallback: "no-image.png" %>
+                          <% end %>
+                      </p>
+                    </figure>
+                    <div class="media-content">
+                      <%= link_to user_path(review.user_id) do %>
+                          <%= review.user.username %>さん
+                      <% end %>
+                          投稿日：<%= review.updated_at.strftime("%Y-%m-%d %H:%M") %>
+                      <% if current_user == review.user %>
+                        <%= link_to post_path(review), method: :delete, data:{confirm: "削除しますか？"} do %>
+                          削除
+                        <% end %>
+                      <% end %>
+                      <div class="star-rating mt-1 ">
+                        <div class="star-rating-front" style="width: <%= review.score * 20 %>%">★★★★★</div>
+                        <div class="star-rating-back">★★★★★</div>
+                      </div>
+                                      <div class ="has-text-right">
+                    <p class="card-header-title ">
+                    評価：<%= review.score %>点
+                    </p>
+                  </div>
+                      <div class="has-text-centered">
+                      <%= review.content %>
+                      </div>
+                    </div>
+                </div>
+              <% end %>
+              <div class="card mt-3 mb-0">
+                <%= paginate @reviews,class: "pagination is-centered" %>
+              </div>
+          </div>
+      </div>
     </div>
   </div>
 </section>

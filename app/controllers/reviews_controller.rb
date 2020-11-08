@@ -4,7 +4,8 @@ class ReviewsController < ApplicationController
   def index
     
     @house_maker = HouseMaker.find(params[:house_maker_id])
-    @reviews = @house_maker.reviews
+    @reviews = @house_maker.reviews.all.page(params[:page]).per(2)
+    
     
   end
   
@@ -20,6 +21,7 @@ class ReviewsController < ApplicationController
       render "house_makers/show"
     end
   end
+  
 
   private
   def review_params

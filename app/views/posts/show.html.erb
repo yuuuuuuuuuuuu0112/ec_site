@@ -25,9 +25,14 @@
               </strong>
               <br>
 							<%= simple_format @post.body %>
+                <% if @post.image_id == nil %>
+                <% else %>
+                    <%= link_to post_path(@post) do %>
               <p class="image is-128x128">
-							<%= attachment_image_tag @post, :image %>
+							    <%= attachment_image_tag @post, :image %>
               </p>
+                    <% end %>
+                <% end %>
                 <div class ="has-text-right">
                   <% if current_user.already_favorited?(@post)%>
                     <%= link_to post_favorites_path(@post), method: :delete do %>
@@ -41,6 +46,9 @@
                   <%= @post.favorites.count %>
                   <% if @post.user.id == current_user.id%>
                     <%= link_to "編集", edit_post_path(@post), class: "buttom"%>
+                    <%= link_to post_path(@post), method: :delete, data:{confirm: "削除しますか？"} do %>
+                    削除
+                    <% end %>
                 </div>
 								<% end %>
             </p>

@@ -8,32 +8,36 @@
     </div>
   </div>
 </section>
-<section class="section mt-6">
+<section class="section mt-1">
   <div class="container">
     <div class="columns is-centered">
       <div class="column is-5">
-        <div class="card mb-6">
-          <header class="card-header">
-            <p class="card-header-title">
-              <%= @house_maker.name %>
-            </p>
-          </header>
-          <div class="card-content">
-          <%= link_to house_maker_reviews_path(@house_maker) do %>
-            <div class="content average-score">
-              <div class="star-rating mb-2">
-                <div class="star-rating-front" style="width: <%= @house_maker.review_score_percentage %>%">★★★★★</div>
-                <div class="star-rating-back">★★★★★</div>
+        <div class ="box">
+          <div class="card mb-6">
+            <header class="card-header">
+              <p class="card-header-title">
+                <%= @house_maker.name %>
+              </p>
+            </header>
+            <div class="card-content">
+            <%= link_to house_maker_reviews_path(@house_maker) do %>
+              <div class="content average-score">
+                <div class="star-rating mb-2">
+                  <div class="star-rating-front" style="width: <%= @house_maker.review_score_percentage %>%">★★★★★</div>
+                  <div class="star-rating-back">★★★★★</div>
+                </div>
+                <div class="average-score-display ml-3 pt-2">
+                  <%= @house_maker.avg_score %>点（<%= @house_maker.reviews.count %>件のレビュー）
+                </div>
               </div>
-              <div class="average-score-display ml-3 pt-2">
-                <%= @house_maker.avg_score %>点（<%= @house_maker.reviews.count %>件のレビュー）
-              </div>
+            <% end %>
             </div>
-          <% end %>
           </div>
+          <%= render 'reviews/form', review: @review, house_maker: @house_maker %>
         </div>
-        <%= render 'reviews/form', review: @review, house_maker: @house_maker %>
       </div>
     </div>
   </div>
 </section>
+
+

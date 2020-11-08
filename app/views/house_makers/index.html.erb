@@ -1,40 +1,79 @@
 
-<div class="container">
-  <div class="columns is-multiline is-mobile ">
-    <% @house_makers.each do |house_maker| %>
-      <div class="column is-half">
-        <p class="card-header-title">
-            <div class="card mb-6">
-              <header class="card-header">
-                <p class="card-header-title is-centered ">
-                  <%= link_to house_maker.name, house_maker_reviews_path(house_maker) %>
-                </p>
-              </header>
-              <div class="card-content">
-                <div class="content">
-                  <div class="content average-score">
-                    <div class="star-rating mb-2">
-                      <div class="star-rating-front" style="width: <%= house_maker.review_score_percentage %>%">★★★★★</div>
-                      <div class="star-rating-back">★★★★★</div>
-                    </div>
-                    <div class="average-score-display ml-3 pt-2">
-                      <%= house_maker.avg_score %>点（<%= house_maker.reviews.count %>件のレビュー）
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <footer class="card-footer">
-              <%= link_to house_maker_reviews_path(house_maker), class: "button card-footer-item" do %>
-              レビューを見る
-              <% end %>
-              <%= link_to house_maker_path(house_maker), class: "button card-footer-item" do %>
-              レビューを書く
-              <% end %>
-              </footer>
-            </div>
+
+
+<div class ="column mt-6">
+</div>
+<div class ="container">
+  <div class="columns is-mobile is-centered">
+    <div class="column is-four-fifths">
+      <div class="box mt-6">
+        <div class="container">
+          <h1 class="title has-text-centered mb-4">
+            ハウスメーカー一覧
+          </h1>
+        </div>
+        <div class="box">
+              <div class="has-text-centered">
+        <%= search_form_for @q do |f| %>
+        <nav class="level">
+  <div class="level-left">
+    <div class="level-item">
+      <p class="subtitle is-5">
+        <strong>検索ワード</strong>
+      </p>
+    </div>
+    <div class="level-item">
+      <div class="field has-addons">
+        <p class="control">
+          <%= f.search_field :name_cont,class:"input", type:"text", placeholder:"検索ワード"%>
         </p>
+        <p class="control">
+          <%= f.submit "検索",class: "button" %>
+          <%= link_to "全て表示" ,house_makers_path ,class:"button" %>
       </div>
-    <% end %>
+    </div>
   </div>
+</nav>
+  </div>
+  </div>
+<% end %>
+<div class="container">
+<div class="columns is-centered">
+<table class="table">
+  <thead>
+    <tr>
+      <th class ="has-text-centered">メーカー名</th>
+      <th class ="has-text-centered">評価</th>
+      <th class ="has-text-centered">点数</th>
+      <th class ="has-text-centered">レビュー数</th>
+    </tr>
+  </thead>
+  <% @house_makers.each do |house_maker| %>
+    <tfoot>
+      <tr>
+        <th><%= link_to house_maker.name, house_maker_reviews_path(house_maker) %></th>
+        <th class ="has-text-centered">
+          <div class="star-rating mb-2">
+            <div class="star-rating-front" style="width: <%= house_maker.review_score_percentage %>%">
+              ★★★★★
+            </div>
+            <div class="star-rating-back">
+              ★★★★★
+            </div>
+          </div>
+        </th>
+        <th class ="has-text-centered">
+          <div class="average-score-display ml-3 pt-2">
+            <%= house_maker.avg_score %>点
+          </div>
+        </th>
+        <th class ="has-text-centered">
+        （<%= house_maker.reviews.count %>件）
+        </th>
+      </tr>
+    </tfoot>
+  <% end %> 
+</table>
+</div>
 </div>
 

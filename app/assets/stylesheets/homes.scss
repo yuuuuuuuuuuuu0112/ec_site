@@ -1,3 +1,42 @@
 // Place all the styles related to the homes controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+.main-container {
+  background-image:  image-url("house.jpg");
+  background-size:  cover;
+  opacity:  0.8;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-blend-mode: multiply,multiply;
+  font-family: sans-serif;
+  height: 916px;
+}
+ 
+h4 {
+  position: relative;
+  padding: 0.25em 1em;
+  border: solid 2px black;
+  border-radius: 3px 0 3px 0;
+  background-color: white;
+  opacity:  0.8;
+
+}
+
+h4:before, h4:after {
+  content: '';
+  position: absolute;
+  width:10px;
+  height: 10px;
+  border: solid 2px black;
+  border-radius: 50%;
+}
+
+h4:after {
+  top:-12px;
+  left:-12px;
+}
+h4:before {
+  bottom:-12px;
+  right:-12px;
+}

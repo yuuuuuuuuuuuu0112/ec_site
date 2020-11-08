@@ -1,48 +1,85 @@
 
-<section class="section">
-  <div class="container">
-    <div class="columns is-multiline">
-      <% @users.each do |user| %>
-        <div class="column is-3">
-          <div class="card">
-            <div class="card-content">
-              <div class="card-image">
-                <figure class="image is-128x128">
+
+<div class ="column mt-6">
+</div>
+<div class ="container">
+  <div class="columns is-mobile is-centered">
+    <div class="column is-four-fifths">
+      <div class="box">
+        <div class="container">
+          <h1 class="title has-text-centered mb-4">
+            ユーザー一覧
+          </h1>
+        </div>
+        <div class="box">
+          <div class="has-text-centered">
+          <%= search_form_for @q do |f| %>
+            <nav class="level">
+              <div class="level-left">
+                <div class="level-item">
+                  <p class="subtitle is-5">
+                    <strong>検索ワード</strong>
+                  </p>
+                </div>
+                <div class="level-item">
+                  <div class="field has-addons">
+                    <p class="control">
+                      <%= f.search_field :username_or_maker_name_cont,class:"input", type:"text", placeholder:"検索ワード"%>
+                    </p>
+                    <p class="control">
+                      <%= f.submit "検索",class: "button" %>
+                  </div>
+                </div>
+              </div>
+              <div class="level-right">
+                <p class="level-item"><strong>状況：</strong></p>
+                <div class="select">
+                  <%= f.select :have_house_eq, {"指定なし": '', "これから建築": 1, "建築済み": 2}, { class: 'form-control' , required: true } %>
+                </div>
+                <%= f.submit "検索",class: "button" %>
+              </div>
+              <%= link_to "全て表示" ,users_path ,class:"button" %>
+            </nav>
+          <% end %>
+          </div>
+        </div>
+          <div class="container">
+            <div class="columns is-centered">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th class ="has-text-centered">画像</th>
+                  <th class ="has-text-centered">ユーザー名</th>
+                  <th class ="has-text-centered">状況</th>
+                  <th class ="has-text-centered">メーカー名</th>
+                </tr>
+              </thead>
+              <% @users.each do |user| %>
+                <tfoot>
+                  <tr>
+                    <th><p class="image is-32x32">
                   <%= link_to user_path(user) do %>
                     <%= attachment_image_tag user, :profile_image, fallback: "no-image.png" %>
                   <% end %>
-                </figure>
-              </div>
-            </div>
-            <div class="card-content">
-              <div class="media">
-                <div class="media-content">
-                  <div class="title"><%=link_to user.username, user_path(user) %></div>
-                </div>
-              </div>
-              <div class="content">
-              <% if user.have_house == "1"%>
-              気になるメーカー：
-              <% else %>
-              建築メーカー：
-              <% end %>
-              </div>
-              <div class="content">
-              <%= user.maker_name%>
-              </div>
-               <div class="content">
-              投稿数：<%=user.posts.count%>
-              </div>
-            </div>
-          </div>
-        </div>
-      <% end %>
-    </div>
+                </p></th>
+        <th class ="has-text-centered"><%=link_to user.username, user_path(user) %></th>
+        <th class ="has-text-centered"><% if user.have_house == "1"%>
+                  建築前
+                <% else %>
+                  建築済み
+                <% end %></th>
+        <th class ="has-text-centered">
+                <%= user.maker_name%>
+                </th>
+        <th class ="has-text-centered"><%=user.posts.count%></th>
+      </tr>
+    </tfoot>
+  <% end %> 
+</table>
+</div>
+  <div class="card mt-3 mb-0">
+    <%= paginate @users,class: "pagination is-centered" %>
   </div>
-
-
-
-
-
+</div>
 
 

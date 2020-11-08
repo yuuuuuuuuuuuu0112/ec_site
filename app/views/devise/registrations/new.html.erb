@@ -2,7 +2,8 @@
   <div class="container">
     <div class="columns is-centered">
       <div class="column is-4">
-      <div class ="">
+
+      <div class ="box">
         <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
         <%= render "devise/shared/error_messages", resource: resource %>
           <div class="field">
@@ -46,6 +47,7 @@
           </div>
           <div class="actions">
             <%= f.submit "新規登録", class: "button is-success" %>
+            <%= link_to 'ゲストログイン（閲覧用）', homes_guest_sign_in_path, method: :post ,class: "button is-warning"%>
           </div>
         <% end %>
       </div>
