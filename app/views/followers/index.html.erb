@@ -3,3 +3,153 @@
     <%= link_to user.email, [user] %>
   </div>
 <% end %>
+
+
+<section class="hero is-success">
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title has-text-centered">
+         <% if @user == current_user%>
+            マイページ
+         <% else %>
+            <%= @user.username %>のプロフィール
+         <% end %>
+      </h1>
+    </div>
+  </div>
+</section>
+   <div class ="container">
+            <div class="column">
+            <article class="box media">
+            <figure class="media-left">
+               <p class="image is-128x128">
+               <%= attachment_image_tag @user, :profile_image, fallback: "no-image.png" %>
+               </p>
+            </figure>
+            <div class="media-content">
+               <div class="content">
+                  <p><strong>名前：<%= @user.username %></strong>
+                  <%if @user.id == current_user.id%>
+                     <%=@user.email%>
+                  <% end %>
+                  <strong>
+                  <% if @user.have_house == "1" %>
+                  気になるメーカー：
+                  <% else %>
+                  オーナー：
+                  <% end %>
+                  <%=@user.maker_name%>
+                  </strong>
+                  
+                  <br>プロフィール<br>
+                  <br><%=@user.profile%><br>
+                  </p>
+                  <%if @user.id == current_user.id%>
+                  <td>
+                  <%= link_to edit_user_path(@user), class: "button" do %>
+                  編集
+                  <% end %>
+                  </td>
+                  <% end %>
+                  <%= link_to favorite_path(@user), class: "button" do %>
+                  お気に入り一覧
+                  <% end %>
+               </div>
+            </div>
+         </article>
+      </div>
+      </main>
+   </div>
+<div class ="container">
+   <div class="columns is-mobile is-centered">
+      <div class="column is-four-fifths">
+         <div class="box">
+            <div class="container">
+               <h1 class="title has-text-centered mb-4">
+                  <%= @user.username %>のフォロワー一覧
+               </h1>
+            </div>
+            <% @user.posts.each do |post|%>
+               <div class="box media mb-0 mt-0">
+                  <figure class="media-left">
+                     <p class="image is-32x32">
+                        <%= link_to user_path(post.user_id) do %>
+                           <%= attachment_image_tag post.user, :profile_image, fallback: "no-image.png" %>
+                        <% end %>
+                     </p>
+                  </figure>
+                  <div class="media-content">
+                     <%= link_to user_path(post.user_id) do %>
+                        <%= post.user.username %>さん：
+                     <% end %>
+                     <strong>
+                        <%= link_to post_path(post) do %>
+                           <%= post.title %>
+                        <% end %>
+                     </strong>
+                     <% if post.image_id == nil %>
+                     <% else %>
+                        <%= link_to post_path(post) do %>
+                           画像あり
+                        <% end %>
+                     <% end %>
+                     <div class ="has-text-right is-size-7">
+                        <%= link_to post_path(post) do %>
+                           <span class="icon is-small"><i class="fas fa-reply"></i></span>
+                           <%= post.comments.count %>
+                        <% end %>
+                        <% if user_signed_in? %> 
+                           <% if current_user.already_favorited?(post)%>
+                              <%= link_to post_favorites_path(post), method: :delete do %>
+                                 <span style="color: #ff5252"><span style="font-size: 100%"><i class="fa fa-heart faa-wrench animated-hover"></i></span></span>
+                              <% end %>
+                           <% else %>
+                              <%= link_to post_favorites_path(post), method: :post do %>
+                                 <i class ="far fa-heart faa-wrench animated-hover"></i>
+                              <% end %>
+                           <% end %>
+                           <%= post.favorites.count %>
+                        <% else %>
+                           <%= link_to post_favorites_path(post), method: :delete do %>
+                              <i class ="far fa-heart faa-wrench animated-hover"></i>
+                              <%= post.favorites.count %>
+                           <% end %>
+                        <% end %>
+                        <%= link_to post_path(post) do %>
+                           詳細
+                        <% end %>
+                        <% if current_user == post.user %>
+                           <%= link_to post_path(post), method: :delete, data:{confirm: "削除しますか？"} do %>
+                              削除
+                           <% end %>
+                        <% end %>
+                        <%= post.updated_at.strftime("%Y-%m-%d %H:%M") %>投稿
+                     </div>
+                  </div>
+               </div>
+            <% end %>
+         </div>
+     </div>
+   </div>
+</div>
+
+<% if user_signed_in? && current_user != @user %>
+  <% if current_user.active_relationships.exists?(target_user_id: @user.id) %>
+    <%= link_to 'unfollow', [@user, :follow], class: "button",method: :delete %>
+  <% else %>
+    <%= link_to 'follow', [@user, :follow],class: "button", method: :post %>
+  <% end %>
+<% end %>
+
+<div class="tabs">
+  <ul>
+    <li>
+      <%= link_to 'followings', [@user, :followings] %>
+      <%=@user.followings.count%>
+    </li>
+    <li>
+      <%= link_to 'followers', [@user, :followers] %>
+      <%=@user.followers.count%>
+    </li>
+  </ul>
+</div>
