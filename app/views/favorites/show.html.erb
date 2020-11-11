@@ -7,7 +7,7 @@
     </div>
   </div>
 </section>
-   <div class ="container">
+     <div class ="container">
             <div class="column">
             <article class="box media">
             <figure class="media-left">
@@ -29,6 +29,7 @@
                   <% end %>
                   <%=@user.maker_name%>
                   </strong>
+                  
                   <br>プロフィール<br>
                   <br><%=@user.profile%><br>
                   </p>
@@ -39,8 +40,12 @@
                   <% end %>
                   </td>
                   <% end %>
-                  <%= link_to user_path(@user), class: "button" do %>
-                  投稿一覧
+                  <% if user_signed_in? && current_user != @user %>
+                     <% if current_user.active_relationships.exists?(target_user_id: @user.id) %>
+                        <%= link_to 'フォローを外す', [@user, :follow], class: "button",method: :delete %>
+                     <% else %>
+                        <%= link_to 'フォロー', [@user, :follow],class: "button", method: :post %>
+                     <% end %>
                   <% end %>
                </div>
             </div>
@@ -48,6 +53,30 @@
       </div>
       </main>
    </div>
+   <div class ="container">
+      <div class="columns is-mobile is-centered">
+         <div class="tabs">
+            <ul>
+               <li>
+                  <%= link_to "投稿", user_followers_path(@user)  %>
+                  <%=@user.posts.count%>
+               </li>
+               <li>
+                  <%= link_to "お気に入り", favorite_path(@user) %>
+                  <%=@user.favorites.count%>
+               </li>
+               <li>
+                  <%= link_to "フォロー", user_followings_path(@user)  %>
+                  <%=@user.followings.count%>
+               </li>
+               <li>
+                  <%= link_to "フォロワー", user_followers_path(@user)  %>
+                  <%=@user.followers.count%>
+               </li>
+            </ul>
+         </div>
+      </div>
+   </div>   
 <div class ="container">
    <div class="columns is-mobile is-centered">
       <div class="column is-four-fifths">

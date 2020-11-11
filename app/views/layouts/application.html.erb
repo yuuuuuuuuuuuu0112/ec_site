@@ -30,11 +30,50 @@
             <strong class="is-size-3" style="font-family: cursive; color: black;">Review House</strong>
           <% end %>
         </p>
-        <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-        </a>
+          <div id="nav-drawer" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+            <input id="nav-input" type="checkbox" class="navbar-burger burger" class="nav-unshown">
+            <div id="nav-open" for="nav-input" ><span></span></div>
+            <label class="nav-unshown" id="nav-close" for="nav-input"></label>
+            <div id="nav-content">
+              <% if user_signed_in? %>
+              <p class="navbar-item">ようこそ
+              <%= link_to user_path(current_user) do %>
+              <%= current_user.username %> 
+              <% end %>
+              さん
+              </p>
+              <% end %>
+              <% if user_signed_in? %>
+                <%= link_to user_path(current_user) ,class: "button" do  %>
+                マイページ
+                <% end %>
+                <%= link_to destroy_user_session_path, method: :delete, class: "button" do %>
+                  ログアウト
+                <% end %>
+              <% else %>
+                <%= link_to new_user_session_path, class: "button" do %>
+                  ログイン
+                <% end %>
+                <%= link_to new_user_registration_path, class: "button" do %>
+                  新規登録
+                <% end %>
+              <% end %>
+              <%= link_to house_makers_path, class: "navbar-item" do %>
+                ハウスメーカー一覧
+              <% end %>
+              <%= link_to users_path, class: "navbar-item" do %>
+                ユーザー一覧
+              <% end %>
+              <%= link_to posts_path, class: "navbar-item" do %>
+                投稿一覧
+              <% end %>
+              <%= link_to new_post_path, class: "navbar-item" do %>
+                新規投稿
+              <% end %>
+            </div>
+          </div>
+
+
       </div>
       <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-start">
