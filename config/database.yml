@@ -1,15 +1,17 @@
 default: &default
   adapter: mysql2
   encoding: utf8
+  charset: utf8mb4
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   username: root
   password: urutora15872
   socket: /tmp/mysql.sock
-
+  host: db
 
 development:
   <<: *default
-  database: maker_development
+  host: db
+  database: docker_development
 
 
 test:
