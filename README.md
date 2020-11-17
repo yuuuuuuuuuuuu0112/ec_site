@@ -4,7 +4,7 @@
 
 # ポートフォリオ
 
-![image]images.githubusercontent.com/69754020/99382468-f238f780-290f-11eb-8d2d-f2525e611a8d.jpg)
+![image](images.githubusercontent.com/69754020/99382468-f238f780-290f-11eb-8d2d-f2525e611a8d.jpg)
 
 ## 概要
 ハウスメーカーの評判が見れるサイトです。
