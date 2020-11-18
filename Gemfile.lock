@@ -93,7 +93,7 @@ GEM
       warden (~> 1.2.3)
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
-    erubi (1.9.0)
+    erubi (1.10.0)
     execjs (2.7.0)
     ffi (1.13.1)
     globalid (0.4.2)
@@ -296,7 +296,7 @@ DEPENDENCIES
   web-console (>= 3.3.0)
 
 RUBY VERSION
-   ruby 2.6.6p146
+   ruby 2.5.8p224
 
 BUNDLED WITH
-   1.17.2
+   2.1.4
