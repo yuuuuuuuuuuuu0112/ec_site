@@ -62,13 +62,12 @@ SNSのようにいいね・コメント機能もあり、気になったサー�
 - Rails 5.2.4
 
 # 使用技術一覧:
-- Sass(scss)
+- Scss
 - HTML/CSS
 - Javascript / jQuery
 - AWS
-- Docker, docker-compose
+- Docker
 - MySQL
-- Nginx, Unicorn
 - Git
 
 
